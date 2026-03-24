@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nami Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Namitha Portfolio</h1>
+    <p>Full Stack Developer</p>
+</header>
+
+<section>
+    <h2>About Me</h2>
+    <p>I am learning full stack development.</p>
+</section>
+
+<section>
+    <h2>Projects</h2>
+    <ul>
+        <li>Portfolio Website</li>
+        <li>Lost & Found System</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Contact Me</h2>
+    <form action="/contact" method="POST">
+        <input type="text" name="name" placeholder="Enter Name" required>
+        <input type="email" name="email" placeholder="Enter Email" required>
+        <textarea name="message" placeholder="Your Message"></textarea>
+        <button type="submit">Send</button>
+    </form>
+</section>
+
+</body>
+</html>
