@@ -1,43 +1,47 @@
 from flask import Flask, render_template, request, redirect
-import mysql.connector
+import pymysql
 import os
 
 app = Flask(__name__)
 
-# Direct DB connection using environment variables (Railway / Render)
-def get_db_connection():
-    return mysql.connector.connect(
-        host=os.getenv("MYSQLHOST"),
-        user=os.getenv("MYSQLUSER"),
-        password=os.getenv("MYSQLPASSWORD"),
-        database=os.getenv("MYSQLDATABASE"),
-        port=int(os.getenv("MYSQLPORT", 3306))
-    )
+# Railway MySQL Connection
+connection = pymysql.connect(
+    host=os.getenv("MYSQLHOST"),
+    user=os.getenv("MYSQLUSER"),
+    password=os.getenv("MYSQLPASSWORD"),
+    database=os.getenv("MYSQLDATABASE"),
+    port=int(os.getenv("MYSQLPORT"))
+)
 
-@app.route('/')
+# HOME PAGE (Fetch Data)
+@app.route("/")
 def home():
-    return render_template('index.html')
-
-@app.route('/contact', methods=['POST'])
-def contact():
-    name = request.form['name']
-    email = request.form['email']
-    message = request.form['message']
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "INSERT INTO contacts (name, email, message) VALUES (%s, %s, %s)",
-        (name, email, message)
-    )
-
-    conn.commit()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM contacts ORDER BY id DESC")
+    contacts = cursor.fetchall()
     cursor.close()
-    conn.close()
 
-    return redirect('/')
+    return render_template("index.html", contacts=contacts)
 
-# Required for Render deployment
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
+
+# INSERT DATA
+@app.route("/contact", methods=["POST"])
+def contact():
+    name = request.form.get("name")
+    email = request.form.get("email")
+    message = request.form.get("message")
+
+    cursor = connection.cursor()
+
+    sql = "INSERT INTO contacts (name, email, message) VALUES (%s, %s, %s)"
+    cursor.execute(sql, (name, email, message))
+    connection.commit()
+
+    cursor.close()
+
+    return redirect("/")
+
+
+# RUN
+if __name__ == "__main__":
+    app.run(debug=True)

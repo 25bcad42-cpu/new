@@ -6,69 +6,49 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
     <h1>Namitha Shakthi SJ</h1>
     <p>II BCA Student | Python | Web Development</p>
 </header>
 
-<!-- ABOUT -->
 <section>
     <h2>About Me</h2>
     <p>
-    I am a passionate and motivated Full Stack Developer with strong interest in building dynamic and user-friendly web applications. 
-    I have knowledge in both frontend and backend development using technologies like HTML, CSS, Python, and databases. 
-    I enjoy learning new technologies and applying them to real-world projects. My goal is to become a skilled software developer 
-    and contribute to innovative solutions.
+        I am a passionate Full Stack Developer skilled in Python, HTML, CSS, and databases.
     </p>
 </section>
 
-<!-- SKILLS -->
 <section>
     <h2>Skills</h2>
     <ul>
-        <li>Python Programming</li>
-        <li>RDBMS (SQL)</li>
+        <li>Python</li>
+        <li>SQL</li>
         <li>MongoDB</li>
         <li>C Programming</li>
         <li>HTML & CSS</li>
     </ul>
 </section>
 
-<!-- PROJECTS -->
 <section>
     <h2>Projects</h2>
     <ul>
-        <li>Portfolio Website using HTML, CSS, Python (Flask), and MySQL</li>
-        <li>Web Development Project integrating frontend and backend</li>
+        <li>Portfolio using Flask & MySQL</li>
     </ul>
 </section>
 
-<!-- CERTIFICATES -->
-<section>
-    <h2>Certificates</h2>
-    <ul>
-        <li>Python Programming Certificate</li>
-        <li>Web Development Certificate</li>
-        <li>Database Management (RDBMS) Certificate</li>
-    </ul>
-</section>
-
-<!-- CONTACT FORM -->
 <section>
     <h2>Contact Me</h2>
     <form action="/contact" method="POST">
-        <input type="text" name="name" placeholder="Enter Name" required>
-        <input type="email" name="email" placeholder="Enter Email" required>
-        <textarea name="message" placeholder="Message"></textarea>
+        <input type="text" name="name" placeholder="Enter Name" required><br><br>
+        <input type="email" name="email" placeholder="Enter Email" required><br><br>
+        <textarea name="message" placeholder="Message"></textarea><br><br>
         <button type="submit">Submit</button>
     </form>
 </section>
 
-<!-- DATABASE DISPLAY -->
 <section>
     <h2>User Data</h2>
-    <table>
+    <table border="1">
         <tr>
             <th>ID</th>
             <th>Name</th>
@@ -76,18 +56,23 @@
             <th>Message</th>
         </tr>
 
-        {% for row in contacts %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-        </tr>
-        {% endfor %}
+        {% if contacts %}
+            {% for row in contacts %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4">No data available</td>
+            </tr>
+        {% endif %}
     </table>
 </section>
 
-<!-- SOCIAL LINKS -->
 <section>
     <h2>Connect with Me</h2>
     <a href="#">GitHub</a> |
